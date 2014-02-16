@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div id="list" class="question-list" data-bind="foreach: questions">
+    <div class="grid-sizer"></div>
+    
+    <div class="item" data-bind="style: { background: colour() }, click:focus">        
+            <div class="Question" data-bind="text: question"></div>           
+        </div>
+    </div>   
+        
+        
+<button id="modalButton">Click Me!</button>
+        
+    <div class="md-modal md-effect-1" id="modal-1" data-bind="with: focusedQuestion">
+    <div class="md-content" data-bind="style: { background: colour() }">
+            <h3><span data-bind=" text: question">
+        </span></h3>
+        <div>
+            <ul data-bind="foreach: Options">
+                <li class="Option" data-bind="click: voteFor, clickBubble: false">
+                    <span data-bind="text:value"></span>
+                    (<span data-bind="text: numberOfVotes"></span>)
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="md-overlay"></div>
+
+@section Scripts{ 
+   
+<link rel="stylesheet" type="text/css" href="content/css/default.css" />
+<link rel="stylesheet" type="text/css" href="content/css/component.css" />
+<script src="js/modernizr.custom.js"></script>
+   
+<script src="content/js/classie.js"></script>
+<script src="content/js/modalEffects.js"></script>
+<script>
+    // this is important for IEs
+    var polyfilter_scriptpath = '/js/';
+</script>
+<script src="content/js/cssParser.js"></script>
+<script src="content/js/css-filters-polyfill.js"></script>
+
+<script type="text/javascript">
+
+
+    var colours = ['#1B4C7F', '#83BFFF', '#3697FF', '#385B7F', '#2B79CC'];
+
+    var Option = function(questionId, key, value, numberOfVotes)
+    {
+        var self = this;
+        self.questionId = questionId;
+        self.key = key;
+        self.value = value;
+        self.numberOfVotes = ko.observable(numberOfVotes);
+
+        self.voteFor = function () {
+            $.post('/Question/VoteFor', { questionId: questionId, optionKey: key }, function (response) {
+                //TODO error codes?
+                if (response.Code == 1) {
+                    self.numberOfVotes(self.numberOfVotes() + 1);
+                    viewmodel.userPoints(response.UserPoints);                    
+                }
+                else if(response.Code == 2)
+                    alert('You have already voted on this question.');
+                else 
+                    alert("An error has occured.")
+            });
+        }
+    }
+
+    var Question = function (id, question, options, index) {
+        var self = this;
+        self.id = id;
+        self.question = question;      
+        self.Options = ko.observable(options);
+        self.index = index;
+
+        self.colour = function () {            
+            return colours[self.index % 5];
+        }
+
+        this.focus = function () { 
+            viewmodel.focusedQuestion(self);
+            $('.md-modal').addClass('md-show');
+        }
+    }
+
+    var NewQuestion = function () {
+        self = this;
+        self.question = ko.observable("");
+        self.options = ko.observableArray();
+        self.optionToAdd = ko.observable("");
+        self.SubmitQuestion = function ()
+        {            
+            $.ajax({
+                url: '/Question/AddNewQuestion', 
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: ko.toJSON(this),
+                success: function (response) {
+                    if (response.Code == 1) {
+                       
+                        viewmodel.questions.unshift(JsonToQuestion(response.Question, 0));
+                        viewmodel.userPoints(response.UserPoints);
+                        $('.NewQuestionArea').slideUp();
+                        self.question("");
+                        self.options.removeAll();
+                        self.optionToAdd("");
+
+                    } else {
+                        alert("Failed");
+                    }
+                },
+
+            });
+        };
+        
+        this.addOption = function () {
+            if (this.optionToAdd() != "") {
+                this.options.push(this.optionToAdd()); // Adds the item. Writing to the "items" observableArray causes any associated UI to update.
+                this.optionToAdd(""); // Clears the text box, because it's bound to the "itemToAdd" observable
+            }
+        }.bind(this);  // Ensure that "this" is always this view model
+    };
+
+
+    var VotingViewModel = function (questions, userPoints) {
+        this.questions = ko.observableArray(questions);
+        this.focusedQuestion = ko.observable();
+        this.userPoints = ko.observable(userPoints);
+        this.newQuestion = ko.observable(new NewQuestion());
+    };
+ 
+    var viewmodel;
+    function JsonToQuestion(item, index)
+    {
+        return new Question(
+                item.Id, 
+                item.Question,                    
+                ko.utils.arrayMap(item.Options, function(option) {
+                    return new Option(
+                        item.Id,
+                        option.Key,
+                        option.Value,
+                        option.NumberOfVotes
+                        );
+                }
+                ),
+                index
+            );
+    }
+
+    $(document).ready(function () {       
+
+        $('#modalButton').click(function () {
+            $('.md-modal').addClass('md-show');
+        });
+
+        $('.md-overlay').click(function () {
+            $('.md-modal').removeClass('md-show');
+        });
+
+        $('.NewQuestionArea').hide();
+        $('.NewQuestionButton').click(function() {
+            if($('.NewQuestionArea').is(':hidden')) {
+                $('.NewQuestionArea').slideDown();
+            } else {
+                $('.NewQuestionArea').slideUp();
+            }
+           
+        });
+
+        
+
+        $.getJSON('/Question/GetQuestions', function (dataFromServer) {
+
+            var index = 0;
+            var questions = ko.utils.arrayMap(dataFromServer, function (item) {
+               
+                return JsonToQuestion(item, index++);                
+            });
+
+            viewmodel = new VotingViewModel(questions, @ViewBag.UserPoints );
+            ko.applyBindings(viewmodel);
+
+            //var $container = $('#list');
+            //// initialize
+            //$container.masonry({
+            //    columnWidth: '.grid-sizer',
+            //    itemSelector: '.item'
+            //});
+
+            //var msnry = $('#list').data('masonry');
+            //msnry.layout();
+        });
+
+        
+    });
+</script>
+}

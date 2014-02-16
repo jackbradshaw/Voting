@@ -1,0 +1,324 @@
+﻿body {
+   margin: 0;
+padding: 0;
+    padding-bottom: 20px;
+    background:#262626;
+   /*font-family: 'Amaranth', sans-serif;*/
+    font-weight:bold;
+    font-family: 'Oswald', sans-serif;
+   
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left:  20%;
+    padding-right:  20%;
+}
+
+.navbar-container{
+    
+    top:0;
+    margin-left:20%;
+     margin-right:20%;
+     
+
+}
+
+
+.navbar-header{
+    height:50px;
+   color:white;
+    float:left;
+    width:200px;
+}
+
+.navbar-header span{
+    font-size:42px;
+}
+
+.navbar-login {
+    float:right;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+/******************************************************************/
+
+.navbar{
+    background-color:#1B4C7F !important;
+    height:50px;
+    position:fixed;
+    top:0px;
+    width:100%;
+    z-index:100000;
+   -moz-box-shadow:0px 5px 15px rgba(0,0,0,0.5);
+-webkit-box-shadow:0px 5px 15px rgba(0,0,0,0.5);
+box-shadow:0px 5px 15px rgba(0,0,0,0.5);
+}
+
+#list {
+  background: #262626;  
+}
+
+.question-list{
+    margin-top:80px;
+}
+
+/*.grid-sizer { width: 16.6%; }
+
+
+.item{
+   width:calc(16.6% - 10px);
+   height:0px;
+  padding-bottom:calc(16.6% - 10px);
+  //padding-bottom: calc(20% -10px);
+  margin:5px;
+  float: left;
+  //background: #390dee;
+  border-color: hsla(0, 0%, 0%, 0.5);
+  
+}
+.item1{
+    //padding-bottom:calc(33.2% - 10px);
+}
+
+.item2{
+      width:calc(33.2% - 10px);
+
+}
+
+
+.focus {
+    width:calc(49.8% - 10px);
+    padding-bottom:calc(49.8% - 10px);
+}*/
+
+.grid-sizer { width: 33%;}
+
+ .item{
+   width:calc(33% - 50px); 
+  margin:5px;
+  padding:20px;
+  float: left; 
+  border-color: hsla(0, 0%, 0%, 0.5);
+  
+}
+
+.focus {
+     width:calc(66% - 50px); 
+    height:500px;  
+}
+
+.Question {
+    color: #FFFFFF;
+   font-family: 'Duru Sans', sans-serif;    
+    padding: 20px;
+}
+
+div.SignInPageContainer {
+    width:100%;
+    padding-top:60px;
+    padding-bottom:100px;
+}
+
+div.SignInContainer {   
+    text-align:center;
+     color:white;
+     background-color:#1B4C7F;
+     padding:30px 20px 100px 20px;
+     border-radius:15px;
+     width: 288px;
+     margin: 0 auto;
+}
+
+    div.SignInContainer h1 {
+        margin-bottom:50px;
+    } 
+
+.UserTextbox {
+   
+    width:250px !important;
+}
+
+button.CustomButton.left{
+    width:131px;
+    margin-right:20px;
+}
+
+button.CustomButton.right{
+     width:131px;
+}
+
+.ButtonContainer {
+    margin-top:30px;
+}
+
+  .UserTextbox{ 
+background: #F1F1F1 url(http://www.red-team-design.com/wp-content/uploads/2011/09/login-sprite.png) no-repeat;
+background-position: 5px -7px !important;
+padding: 10px 10px 10px 25px;
+border: 1px solid #CCC;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+-moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+-webkit-box-shadow: 0 1px 1px #CCC inset, 0 1px 0 #FFF;
+box-shadow: 0 1px 1px #CCC inset, 0 1px 0 #FFF;
+} 
+.UserTextbox:focus { 
+background-color: #FFF; 
+border-color: #E8C291; 
+outline: none; 
+-moz-box-shadow: 0 0 0 1px #e8c291 inset; 
+-webkit-box-shadow: 0 0 0 1px #E8C291 inset; 
+box-shadow: 0 0 0 1px #E8C291 inset; 
+} 
+
+.CustomButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-webkit-border-top-left-radius:6px;
+	-moz-border-radius-topleft:6px;
+	border-top-left-radius:6px;
+	-webkit-border-top-right-radius:6px;
+	-moz-border-radius-topright:6px;
+	border-top-right-radius:6px;
+	-webkit-border-bottom-right-radius:6px;
+	-moz-border-radius-bottomright:6px;
+	border-bottom-right-radius:6px;
+	-webkit-border-bottom-left-radius:6px;
+	-moz-border-radius-bottomleft:6px;
+	border-bottom-left-radius:6px;
+	text-indent:0;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:50px;
+	line-height:50px;
+	width:100px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #ffffff;
+}
+.CustomButton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}.CustomButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+.navbar-login div{
+    float:right;  
+    height:50px;
+    width:50px;
+    margin-right:2px;
+    color:white;   
+}
+
+div.NewQuestionButton{
+    border-left:solid;
+    cursor:pointer;
+}
+
+div.NewQuestionButton span{ 
+    width:50px;
+    text-align:center;
+    font-size:30px;
+    float:right;
+}
+
+div.points span.number
+{
+    float: right;
+    font-size: 28px;
+    margin: -3px 0 0 0;
+    text-align:center;
+    width:50px;
+}
+
+
+div.points span.word
+{
+    float: right;
+    font-size: 12px;
+    margin: -9px 0px 0px 0px;
+    text-align:center;
+    width:50px;
+}
+
+div.points{
+    border-left:solid;
+}
+
+div.logoff
+{
+    width:auto;
+    border-left:solid;
+    border-right:solid;
+
+}
+
+    div.logoff a {
+        margin: 15px;
+        float: right;
+        color:white;
+        text-decoration:none;
+    }
+    
+    div.logoff a:visited {color:white;}  /* visited link */
+    div logoff a:hover {color:white;}  /* mouse over link */
+    div.logoff a:active {color:white;}  /* selected link */
+
+div.NewQuestionArea {
+    position:fixed;
+    top:50px;
+      z-index:10000;
+      width:100%;
+      border-bottom:solid;
+      border-width:10px;
+      border-color:#1B4C7F;
+       -moz-box-shadow:0px 5px 155px rgba(0,0,0,0.5);
+-webkit-box-shadow:0px 5px 5px rgba(0,0,0,0.5);
+box-shadow:0px 5px 5px rgba(0,0,0,0.5);
+}
+
+div.NewQuestionContainer
+{
+     padding-left:  20%;
+    padding-right:  20%;
+}

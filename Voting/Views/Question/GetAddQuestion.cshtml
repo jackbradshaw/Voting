@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "GetAddQuestion";
+}
+
+<h2>GetAddQuestion</h2>
+
+<div style="background-color: white; padding: 20px;">
+    <form data-bind="submit: SubmitQuestion">
+        Question:
+        <input data-bind='value: question, valueUpdate: "afterkeydown"' />
+
+      
+        <p>Options:</p>
+        <ol data-bind="foreach: options">
+            <li>
+                <span data-bind='text: $data'></span>
+            </li>
+        </ol>
+        New option:
+        <input data-bind='value: optionToAdd, valueUpdate: "afterkeydown"' />
+        <button data-bind="click: addOption, enable: optionToAdd().length > 0 && options().length < 4">Add</button>
+        <button type="submit" data-bind="enable: options().length > 0 && question().length > 0">Add Question</button>
+    </form>
+        
+      
+</div>
+@section Scripts{ 
+<script type="text/javascript">
+    var QuestionViewModel = function (options) {
+        this.question = ko.observable("");
+        this.options = ko.observableArray(options);
+        this.optionToAdd = ko.observable("");
+        this.SubmitQuestion = function ()
+        {
+            
+            $.ajax({
+                url: 'AddNewQuestion', 
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: ko.toJSON(this),
+                success: function (status) {
+                    if (!!status == true) {
+                        alert("Question Added");
+                    } else {
+                        alert("Failed");
+                    }
+                },
+
+            });
+        };
+            //$.post('AddNewQuestion', { question: this.question(), options: this.options }, function()
+            //{
+            //    alert('sucess!');
+            //})
+        
+        this.addOption = function () {
+            if (this.optionToAdd() != "") {
+                this.options.push(this.optionToAdd()); // Adds the item. Writing to the "items" observableArray causes any associated UI to update.
+                this.optionToAdd(""); // Clears the text box, because it's bound to the "itemToAdd" observable
+            }
+        }.bind(this);  // Ensure that "this" is always this view model
+    };
+
+    ko.applyBindings(new QuestionViewModel(["Alpha", "Beta", "Gamma"]));
+</script>
+    }

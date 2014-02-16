@@ -1,0 +1,20 @@
+﻿@model Voting.Models.SignInViewModel
+@{
+    ViewBag.Title = "Sign In";
+}
+
+<div class="SignInPageContainer">
+    <div class="SignInContainer">
+        <h1>Sign In</h1>
+        @using (Html.BeginForm("FormSubmit", "User"))
+        {
+            @Html.TextBoxFor(m => m.Username, null, new { @class = "UserTextbox" })
+            @Html.ValidationMessageFor(m => m.Username)
+
+            <div class="ButtonContainer">
+                <button name="button" class="CustomButton left" value="@Model.SignIn">Sign In</button>
+                <button name="button" class="CustomButton right" value="@Model.Register">Register</button>
+            </div>
+        }
+    </div>
+</div>
