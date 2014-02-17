@@ -13,43 +13,42 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-container">
-            <div class="navbar-header">
-                         
+            <div class="navbar-header">                         
                <span>Voting</span>
             </div>
-           
             @Html.Partial("_LoginPartial")
-            
         </div>
     </div>
     <div class="NewQuestionArea" data-bind="with: newQuestion" style="background-color: white; padding: 20px;">
         <div class="NewQuestionContainer">
             <h2>Ask A New Question</h2>
-        <form data-bind="submit: SubmitQuestion">
-            Question:
-            <input data-bind='value: question, valueUpdate: "afterkeydown"' />
-
-
-            <p>Options:</p>
-            <ol data-bind="foreach: options">
-                <li>
-                    <span data-bind='text: $data'></span>
-                </li>
-            </ol>
-            New option:
-            <input data-bind='value: optionToAdd, valueUpdate: "afterkeydown"' />
-            <button data-bind="click: addOption, enable: optionToAdd().length > 0 && options().length < 4">Add</button>
-            <button type="submit" data-bind="enable: options().length > 0 && question().length > 0">Add Question</button>
-        </form>
-
-</div>
+            <form class="NewQuestionForm" data-bind="submit: SubmitQuestion">
+                <div>
+                    <label>Question</label>
+                    <textarea data-bind='value: question, valueUpdate: "afterkeydown"'></textarea>
+                </div>
+                <div>
+                    <label>Options</label>
+                    <ol data-bind="foreach: options">                      
+                        <li><span data-bind='text: IntToChar($index())'></span>.
+                            <span data-bind='text: $data'></span>
+                        </li>
+                    </ol>
+                </div>
+                <div>
+                    <label>New option</label>
+                    <input data-bind='value: optionToAdd, valueUpdate: "afterkeydown"' />
+                    <button data-bind="click: addOption, enable: optionToAdd().length > 0 && options().length < 4">Add</button>
+                </div>
+                <div class="NewQuestionButtonContainer">
+                    <button type="submit" data-bind="enable: options().length > 0 && question().length > 0">Add Question</button>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+       <hr />
     </div>
 
     @Scripts.Render("~/bundles/jquery")

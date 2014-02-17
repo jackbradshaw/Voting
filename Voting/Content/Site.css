@@ -29,7 +29,7 @@ padding: 0;
     height:50px;
    color:white;
     float:left;
-    width:200px;
+    width:100px;
 }
 
 .navbar-header span{
@@ -115,7 +115,7 @@ box-shadow:0px 5px 15px rgba(0,0,0,0.5);
     padding-bottom:calc(49.8% - 10px);
 }*/
 
-.grid-sizer { width: 33%;}
+/*.grid-sizer { width: 33%;}
 
  .item{
    width:calc(33% - 50px); 
@@ -124,13 +124,42 @@ box-shadow:0px 5px 15px rgba(0,0,0,0.5);
   float: left; 
   border-color: hsla(0, 0%, 0%, 0.5);
   
-}
+}*/
 
 .focus {
      width:calc(66% - 50px); 
     height:500px;  
 }
 
+#QuestionListContainer {
+    width: calc(100% -10px);
+    margin: 0 auto;
+    margin-top:70px;
+    padding:5px;
+}
+ 
+.QuestionList {
+    -moz-column-count: 3;
+    -moz-column-gap: 7px;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 7px;
+    column-count: 3;
+    column-gap: 7px;
+    width: 100%;
+    padding:0px;
+}
+ 
+.item{
+    display: inline-block;
+    margin-bottom: 7px;
+    width: 100%;
+}
+
+.item:nth-child(5n+0){ background:#1B4C7F;}
+.item:nth-child(5n+1){ background:#83BFFF;}
+.item:nth-child(5n+2){ background:#3697FF;}
+.item:nth-child(5n+3){ background:#385B7F;}
+.item:nth-child(5n+4){ background:#2B79CC;}
 .Question {
     color: #FFFFFF;
    font-family: 'Duru Sans', sans-serif;    
@@ -139,7 +168,7 @@ box-shadow:0px 5px 15px rgba(0,0,0,0.5);
 
 div.SignInPageContainer {
     width:100%;
-    padding-top:60px;
+    padding-top:100px;
     padding-bottom:100px;
 }
 
@@ -315,10 +344,65 @@ div.NewQuestionArea {
        -moz-box-shadow:0px 5px 155px rgba(0,0,0,0.5);
 -webkit-box-shadow:0px 5px 5px rgba(0,0,0,0.5);
 box-shadow:0px 5px 5px rgba(0,0,0,0.5);
+display:none;
 }
 
 div.NewQuestionContainer
 {
      padding-left:  20%;
     padding-right:  20%;
+}
+
+
+.NewQuestionForm label
+{
+    display:block;
+}
+.NewQuestionForm input
+{
+    width:50%;
+}
+.NewQuestionForm textarea
+{
+    width:50%;
+}
+
+.NewQuestionForm li
+{
+    display:inline-block;
+    padding-right:25px;
+}
+
+@media only screen and (max-width : 800px),
+only screen and (max-device-width : 800px){
+   .QuestionList {
+    -moz-column-count: 1;
+    -moz-column-gap: 7px;
+    -webkit-column-count: 1;
+    -webkit-column-gap: 7px;
+    column-count: 1;
+    column-gap: 7px;
+    width: 100%;
+    padding:0px;
+}
+
+   .body-content {
+    padding-left:  5%;
+    padding-right:  5%;
+}
+
+.navbar-container{
+    
+    top:0;
+    margin-left:5%;
+     margin-right:5%;
+     
+
+}
+
+div.NewQuestionContainer
+{
+     padding-left:  5%;
+    padding-right:  5%;
+}
 }

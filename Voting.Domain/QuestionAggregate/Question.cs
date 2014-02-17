@@ -40,8 +40,8 @@ namespace Voting.Domain.QuestionAggregate
 
         #region Constructors
 
-        //Default Constructor - Required By Entity Framework
-        public Question() { }
+        //Protected Default Constructor - Required By Entity Framework 
+        protected Question() { }
 
         public Question(string question, List<string> options, User asker)
         {
@@ -72,55 +72,7 @@ namespace Voting.Domain.QuestionAggregate
         
         #endregion
 
-        #region Public Methods
-
-        //public Option AddOption(string value)
-        //{
-        //    int nextOption = Options.Count() + 1;
-
-        //    //INVARIANT: A question may have at most 4 options.
-        //    if (nextOption > 4)
-        //        //TODO exception
-        //        throw new Exception();
-
-        //    //Create a new Option, with next key:
-        //    Option newOption = new Option(nextOption, value);
-
-        //    //Add it to the Question's collection of options:
-        //    Options.Add(newOption);
-
-        //    return newOption;           
-           
-        //}
-
-        //public void AskQuestion(User asker) 
-        //{
-        //    //Only the user that made the question, may ask it:
-        //    if(this.Asker.Id != asker.Id)
-        //    {                
-        //        throw new Exception();
-        //    }            
-        //    if(State == (int)QuestionState.Closed)
-        //    {
-        //        //TODO Exception
-        //        throw new Exception();
-        //    }
-        //    if (State == (int)QuestionState.BeingPrepared)
-        //    {          
-        //        //Charge user for asking a question:
-        //        if (!asker.ChargePoints(PRICE_FOR_ASKING))
-        //        {
-        //            throw new NotEnoughPointsException(asker.Points, PRICE_FOR_ASKING);
-        //        }
-
-        //        State = (int)QuestionState.Asked;
-        //    }
-        //}
-
-        //public void CloseQuestion()
-        //{
-        //    State = (int)QuestionState.Closed;
-        //}
+        #region Public Methods        
 
         public void Vote(User voter, int option)
         {
@@ -129,29 +81,14 @@ namespace Voting.Domain.QuestionAggregate
             {
                 throw new AlreadyVotedException();
             }
-
-            //Otherwise, add vote:            
-            //TODO check option exists:
-
-            //// 2. Check question has been asked, and is still open:
-            //if(State == (int)QuestionState.BeingPrepared)
-            //{
-            //    //TODO Exception
-            //    throw new Exception();
-            //}
-            //if(State == (int)QuestionState.Closed)
-            //{
-            //    //TODO Exception
-            //    throw new Exception();
-            //}
-
-            // 3. Reward Voter for voting:
-            voter.GivePoints(REWARD_FOR_VOTING);
-
-            // 4. Register Vote:
+           
+            // 2. Register Vote:
             var chosenOption = Options.Where(opt => opt.Key == option).Single();
 
             chosenOption.VoteFor(voter);
+
+            // 3. Reward Voter for voting:
+            voter.GivePoints(REWARD_FOR_VOTING);
         }
 
         #endregion

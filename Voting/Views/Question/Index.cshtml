@@ -4,20 +4,15 @@
 }
 
 
-
-<div id="list" class="question-list" data-bind="foreach: questions">
-    <div class="grid-sizer"></div>
-    
-    <div class="item" data-bind="style: { background: colour() }, click:focus">        
-            <div class="Question" data-bind="text: question"></div>           
-        </div>
-    </div>   
-        
-        
-<button id="modalButton">Click Me!</button>
-        
+<div id="QuestionListContainer">
+    <ul class="QuestionList" data-bind="foreach: questions">       
+        <li class="item" data-bind=" click:focus">
+            <div class="Question" data-bind="text: question"></div>
+        </li>
+    </ul>
+</div>   
     <div class="md-modal md-effect-1" id="modal-1" data-bind="with: focusedQuestion">
-    <div class="md-content" data-bind="style: { background: colour() }">
+    <div class="md-content">
             <h3><span data-bind=" text: question">
         </span></h3>
         <div>
@@ -50,14 +45,11 @@
 
 <script type="text/javascript">
 
-
-    var colours = ['#1B4C7F', '#83BFFF', '#3697FF', '#385B7F', '#2B79CC'];
-
     var Option = function(questionId, key, value, numberOfVotes)
     {
         var self = this;
         self.questionId = questionId;
-        self.key = key;
+        self.key = ko.observable(key);
         self.value = value;
         self.numberOfVotes = ko.observable(numberOfVotes);
 
@@ -76,16 +68,11 @@
         }
     }
 
-    var Question = function (id, question, options, index) {
+    var Question = function (id, question, options) {
         var self = this;
         self.id = id;
         self.question = question;      
-        self.Options = ko.observable(options);
-        self.index = index;
-
-        self.colour = function () {            
-            return colours[self.index % 5];
-        }
+        self.Options = ko.observable(options); 
 
         this.focus = function () { 
             viewmodel.focusedQuestion(self);
@@ -137,10 +124,17 @@
         this.focusedQuestion = ko.observable();
         this.userPoints = ko.observable(userPoints);
         this.newQuestion = ko.observable(new NewQuestion());
+
+        
     };
  
     var viewmodel;
-    function JsonToQuestion(item, index)
+
+    function IntToChar(i)
+    {        
+        return 'ABCD'.charAt(i);
+    }
+    function JsonToQuestion(item)
     {
         return new Question(
                 item.Id, 
@@ -153,10 +147,11 @@
                         option.NumberOfVotes
                         );
                 }
-                ),
-                index
+                )               
             );
     }
+
+    
 
     $(document).ready(function () {       
 
@@ -182,10 +177,9 @@
 
         $.getJSON('/Question/GetQuestions', function (dataFromServer) {
 
-            var index = 0;
-            var questions = ko.utils.arrayMap(dataFromServer, function (item) {
-               
-                return JsonToQuestion(item, index++);                
+           
+            var questions = ko.utils.arrayMap(dataFromServer, function (item) {               
+                return JsonToQuestion(item);                
             });
 
             viewmodel = new VotingViewModel(questions, @ViewBag.UserPoints );
