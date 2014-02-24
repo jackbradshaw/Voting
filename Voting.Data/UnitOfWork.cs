@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Voting.Data.Repositories;
 using Voting.Domain;
 using Voting.Domain.QuestionAggregate;
 using Voting.Domain.UserAggregate;
@@ -11,13 +12,13 @@ namespace Voting.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private IVotingContext _content;
+        private VotingContext _context;
 
-        public UnitOfWork(IVotingContext context, IQuestionRepository questionRepository, IUserRepository userRepository)
+        public UnitOfWork()
         {
-            _content = context;
-            QuestionRepository = questionRepository;
-            UserRepository = userRepository;
+            _context = new VotingContext();
+            QuestionRepository = new QuestionRepository(_context);
+            UserRepository = new UserRepository(_context);
         }
 
         public IQuestionRepository QuestionRepository { get; private set; }
@@ -26,7 +27,7 @@ namespace Voting.Data
 
         public void Save()
         {
-            _content.SaveChanges();
+            _context.SaveChanges();
         }
 
         private bool disposed = false;
@@ -37,7 +38,7 @@ namespace Voting.Data
             {
                 if (disposing)
                 {
-                    _content.Dispose();
+                    _context.Dispose();
                 }
             }
             this.disposed = true;

@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Voting.Domain.QuestionAggregate
 {
-    public interface IQuestionRepository : IRepository<Question>
+    public interface IQuestionRepository
     {
+        Question GetById(Guid id);
 
+        void Add(Question question);
+
+        List<Question> GetAll();
     }
 }

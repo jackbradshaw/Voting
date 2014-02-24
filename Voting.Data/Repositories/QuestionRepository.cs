@@ -4,15 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Voting.Domain.QuestionAggregate;
+using System.Data.Entity;
 
 namespace Voting.Data.Repositories
 {
-    public class QuestionRepository : Repository<Question>, IQuestionRepository
+    public class QuestionRepository : IQuestionRepository
     {
-        public QuestionRepository(IVotingContext votingContext)
+        private VotingContext _context;
+
+        public QuestionRepository(VotingContext votingContext)
         {
-            _context = votingContext;
-            _rootDbSet = _context.Questions;
+            _context = votingContext;            
+        }
+        
+        public Question GetById(Guid id)
+        {
+            //return _context.Set<Question>().Find(id);
+
+            return _context.Set<Question>()
+                .Include(q => q.Options.Select(o =>o.Votes))
+                .Where(q => q.Id == id)
+                .SingleOrDefault();
+        }
+
+        public void Add(Question question)
+        {
+            _context.Set<Question>().Add(question);
+        }
+
+        public List<Question> GetAll()
+        {
+            return _context.Set<Question>().ToList();
         }
     }
 }

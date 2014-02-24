@@ -41,7 +41,6 @@
   <ItemGroup>
     <Compile Include="Exceptions\AlreadyVotedException.cs" />
     <Compile Include="Exceptions\NotEnoughPointsException.cs" />
-    <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionAggregate\IQuestionRepository.cs" />

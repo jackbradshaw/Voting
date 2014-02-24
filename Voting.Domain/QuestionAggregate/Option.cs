@@ -24,8 +24,6 @@ namespace Voting.Domain.QuestionAggregate
 
         public string Value { get; private set; }
 
-        public Guid QuestionId { get; private set; }
-
         public virtual List<Vote> Votes { get; private set; }
 
         public int NumberOfVotes
@@ -36,7 +34,7 @@ namespace Voting.Domain.QuestionAggregate
             }
         }
 
-        public Option() { }
+        protected Option() { }
 
         public Option(int key, string value)
         {

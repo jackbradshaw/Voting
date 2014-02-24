@@ -13,18 +13,14 @@ using Voting.Models;
 namespace Voting.Controllers
 {
     public class UserController : Controller
-    {
-        private IVotingContext _dbContext;
+    {      
         private readonly IUnitOfWork _unitOfWork;
 
         public UserController()
-        {
-            _dbContext = new VotingContext();
-            _unitOfWork = new UnitOfWork(_dbContext, new QuestionRepository(_dbContext), new UserRepository(_dbContext));
+        {          
+            _unitOfWork = new UnitOfWork();
         }
-
-        //
-        // GET: /User/
+       
         public ActionResult Index()
         {
             return View(new SignInViewModel());
@@ -34,14 +30,14 @@ namespace Voting.Controllers
         {
             if (viewmodel.Button == viewmodel.SignIn)
                 return SignIn(viewmodel.Username);
-            //if (viewmodel.Button == viewmodel.Register)
+           
             return Register(viewmodel.Username); 
         }
 
         private ActionResult SignIn(string username)
         {
             //Try and get the User:
-            var user = _unitOfWork.UserRepository.Get(u => u.Name == username).SingleOrDefault();
+            var user = _unitOfWork.UserRepository.GetByUsername(username);
 
             if (user == null) throw new Exception(); //persist model state and refierct to index?
 
@@ -90,7 +86,7 @@ namespace Voting.Controllers
         /// <returns></returns>
         public bool IsUserNameAvailible(string username)
         {
-            return _unitOfWork.UserRepository.Get(u => u.Name == username).Count() == 0;
+            return _unitOfWork.UserRepository.GetByUsername(username) == null;
         }
 	}
 }

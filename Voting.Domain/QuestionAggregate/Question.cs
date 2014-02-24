@@ -18,12 +18,8 @@ namespace Voting.Domain.QuestionAggregate
 
         public Guid Id { get; private set; }
 
-        public string Text { get; private set; } 
-
-        public int State { get; private set; }
-
-        public Guid AskerId { get; private set; }
-
+        public string Text { get; private set; }        
+       
         public User Asker {get; private set; }
 
         public virtual List<Option> Options { get; private set; }
@@ -43,24 +39,20 @@ namespace Voting.Domain.QuestionAggregate
         //Protected Default Constructor - Required By Entity Framework 
         protected Question() { }
 
-        public Question(string question, List<string> options, User asker)
+        public Question(string text, List<string> options, User asker)
         {
             Id = Guid.NewGuid();
 
-            Text = question;
+            Text = text;
 
             Options = new List<Option>();
-            if (options != null)
-            {
-                //TODO Exception
-                if (options.Count > 4) throw new Exception();
-                for (int i = 0; i < options.Count; i++)
-                {
-                    Options.Add(new Option(i, options[i]));
-                }
-            }
+            if (options == null || options.Count <= 0 || options.Count > 4) throw new Exception(); //TODO exception
 
-            AskerId = asker.Id;
+            for (int i = 0; i < options.Count; i++)
+            {
+                Options.Add(new Option(i, options[i]));
+            }           
+          
             Asker = asker;
 
             //Charge user for asking a question:

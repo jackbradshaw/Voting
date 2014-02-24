@@ -15,23 +15,21 @@ namespace Voting.Controllers
 {
     [Authorize]
     public class QuestionController : Controller
-    {
-        private IVotingContext _dbContext;
+    {        
         private readonly IUnitOfWork _unitOfWork;
 
-
         public QuestionController()
-        {
-            _dbContext = new VotingContext();
-            _unitOfWork = new UnitOfWork(_dbContext, new QuestionRepository(_dbContext), new UserRepository(_dbContext));
+        {           
+            _unitOfWork = new UnitOfWork();
         }
+
         //
         // GET: /Question/
         public ActionResult Index()
         {
             var username = User.Identity.Name;
 
-            var user = _unitOfWork.UserRepository.Get(u => u.Name == username).SingleOrDefault();
+            var user = _unitOfWork.UserRepository.GetByUsername(username);
 
             ViewBag.UserPoints = user.Points;
 
@@ -40,16 +38,6 @@ namespace Voting.Controllers
 
         public JsonResult GetQuestions()
         {
-
-            //Random rnd = new Random();
-
-            //var questions = new List<QuestionViewModel>();
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    questions.Add(QuestionViewModel.NewRandomQuestion(rnd));
-            //}
-
-            //var questionViewmodels = questions;
             var questions = _unitOfWork.QuestionRepository.GetAll();
 
             var questionViewmodels = questions.Select(q => new QuestionViewModel(q));           
@@ -66,7 +54,7 @@ namespace Voting.Controllers
             {
                 var username = User.Identity.Name;
 
-                var user = _unitOfWork.UserRepository.Get(u => u.Name == username).SingleOrDefault();
+                var user = _unitOfWork.UserRepository.GetByUsername(username);
 
                 var question = _unitOfWork.QuestionRepository.GetById(questionId);
 
@@ -99,7 +87,7 @@ namespace Voting.Controllers
             {
                 var username = User.Identity.Name;
 
-                var user = _unitOfWork.UserRepository.Get(u => u.Name == username).SingleOrDefault();
+                var user = _unitOfWork.UserRepository.GetByUsername(username);
 
                 if (user == null) return Json(false, JsonRequestBehavior.AllowGet);
 

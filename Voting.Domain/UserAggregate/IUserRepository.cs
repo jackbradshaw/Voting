@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Voting.Domain.UserAggregate
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository
     {
+        User GetByUsername(string username);
+
+        void Add(User user);
     }
 }

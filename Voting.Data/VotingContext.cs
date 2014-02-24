@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Voting.Data.Configurations;
@@ -10,24 +11,15 @@ using Voting.Domain.UserAggregate;
 
 namespace Voting.Data
 {
-    public class VotingContext : DbContext, IVotingContext
+    public class VotingContext : DbContext
     {
-        public VotingContext()
-            : base("VotingData")
-        { }
-
-        public IDbSet<User> Users { get; set; }
-        public IDbSet<Question> Questions { get; set; }
-        public IDbSet<Vote> Votes { get;  set; }
-        public IDbSet<Option> Options { get; set; }
+        public VotingContext() : base("VotingData") { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Configurations.Add(new UserConfiguration());
-            modelBuilder.Configurations.Add(new QuestionConfiguration());
-            modelBuilder.Configurations.Add(new VoteConfiguration());
+            modelBuilder.Configurations.AddFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

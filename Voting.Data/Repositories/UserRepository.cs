@@ -7,12 +7,23 @@ using Voting.Domain.UserAggregate;
 
 namespace Voting.Data.Repositories
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : IUserRepository
     {
-        public UserRepository(IVotingContext votingContext)
+        private VotingContext _context;
+
+        public UserRepository(VotingContext votingContext)
         {
-            _context = votingContext;
-            _rootDbSet = _context.Users;
+            _context = votingContext;           
+        }
+        
+        public User GetByUsername(string username)
+        {
+            return _context.Set<User>().Where(u => u.Name == username).SingleOrDefault();
+        }
+
+        public void Add(User user)
+        {
+            _context.Set<User>().Add(user);
         }
     }
 }
