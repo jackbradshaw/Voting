@@ -20,7 +20,7 @@ namespace Voting.Domain.QuestionAggregate
 
         public string Text { get; private set; }        
        
-        public User Asker {get; private set; }
+        public virtual User Asker {get; private set; }
 
         public virtual List<Option> Options { get; private set; }
 

@@ -46,7 +46,6 @@
     <Compile Include="QuestionAggregate\IQuestionRepository.cs" />
     <Compile Include="QuestionAggregate\Option.cs" />
     <Compile Include="QuestionAggregate\Question.cs" />
-    <Compile Include="QuestionAggregate\QuestionState.cs" />
     <Compile Include="QuestionAggregate\Vote.cs" />
     <Compile Include="UserAggregate\IUserRepository.cs" />
     <Compile Include="UserAggregate\User.cs" />

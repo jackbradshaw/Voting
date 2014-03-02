@@ -8,14 +8,12 @@ using Voting.Domain.UserAggregate;
 
 namespace Voting.Domain
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IQuestionRepository QuestionRepository { get; }
 
         IUserRepository UserRepository { get; }
 
         void Save();
-
-        void Dispose();
     }
 }

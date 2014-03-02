@@ -14,7 +14,7 @@ namespace Voting.Models
         {
             Key = option.Key;
             Value = option.Value;
-            NumberOfVotes = option.NumberOfVotes;
+            NumberOfVotes = option.Votes.Count;
         }
 
         public int Key { get; set; }

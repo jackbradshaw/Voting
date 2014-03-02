@@ -14,7 +14,7 @@ namespace Voting.Domain.QuestionAggregate
     /// An option has a key (i.e. option 1) and its value.
     /// 
     /// An option is immutable, by virtue of its interface. There is therefore no danger in
-    /// exposing this value object to clients external to the Object Aggregate.
+    /// exposing this value object to clients external to the Question Aggregate.
     /// </summary>
     public class Option
     {
@@ -25,14 +25,6 @@ namespace Voting.Domain.QuestionAggregate
         public string Value { get; private set; }
 
         public virtual List<Vote> Votes { get; private set; }
-
-        public int NumberOfVotes
-        {
-            get
-            {
-                return Votes.Count();
-            }
-        }
 
         protected Option() { }
 
