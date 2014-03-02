@@ -11,8 +11,6 @@ namespace Voting.Domain.QuestionAggregate
     {
         #region Properties
 
-        public Guid Id { get; private set; }
-
         public Guid VoterId { get; private set; }
 
         public virtual User Voter { get; private set; }        
@@ -25,12 +23,13 @@ namespace Voting.Domain.QuestionAggregate
 
         #region Constructor 
 
-        public Vote() { }
+        protected Vote() { }
 
         public Vote(User voter, Option option)
         {
-            Id = Guid.NewGuid();
-            Voter = voter;         
+            VoterId = voter.Id;
+            Voter = voter;
+            OptionId = OptionId;
             Option = option;
         }
 

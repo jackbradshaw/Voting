@@ -21,5 +21,8 @@ namespace Voting.Data
 
             modelBuilder.Configurations.AddFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+        public IDbSet<Question> Questions { get; set; }
+        public IDbSet<User> Users { get; set; }
     }
 }

@@ -22,16 +22,8 @@ namespace Voting.Domain.QuestionAggregate
        
         public virtual User Asker {get; private set; }
 
-        public virtual List<Option> Options { get; private set; }
+        public virtual IList<Option> Options { get; private set; }
 
-        public IEnumerable<Guid> Voted
-        {
-            get 
-            {
-                return Options.SelectMany(option => option.Votes.Select(vote => vote.VoterId));
-            }
-        }
-        
         #endregion
 
         #region Constructors
@@ -46,8 +38,7 @@ namespace Voting.Domain.QuestionAggregate
             Text = text;
 
             Options = new List<Option>();
-            if (options == null || options.Count <= 0 || options.Count > 4) throw new Exception(); //TODO exception
-
+            if (options == null || options.Count <= 0 || options.Count > 4) throw new InvalidOptionsException(); 
             for (int i = 0; i < options.Count; i++)
             {
                 Options.Add(new Option(i, options[i]));
@@ -69,7 +60,7 @@ namespace Voting.Domain.QuestionAggregate
         public void Vote(User voter, int option)
         {
             // 1. Check if user has not already voted
-            if (Voted.Contains(voter.Id))
+            if (AlreadyVoted().Contains(voter.Id))
             {
                 throw new AlreadyVotedException();
             }
@@ -81,6 +72,15 @@ namespace Voting.Domain.QuestionAggregate
 
             // 3. Reward Voter for voting:
             voter.GivePoints(REWARD_FOR_VOTING);
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public IEnumerable<Guid> AlreadyVoted()
+        {
+            return Options.SelectMany(option => option.Votes.Select(vote => vote.VoterId));
         }
 
         #endregion

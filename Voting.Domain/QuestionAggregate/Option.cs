@@ -24,7 +24,7 @@ namespace Voting.Domain.QuestionAggregate
 
         public string Value { get; private set; }
 
-        public virtual List<Vote> Votes { get; private set; }
+        public virtual IList<Vote> Votes { get; private set; }
 
         protected Option() { }
 

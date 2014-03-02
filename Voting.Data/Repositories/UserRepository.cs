@@ -18,12 +18,12 @@ namespace Voting.Data.Repositories
         
         public User GetByUsername(string username)
         {
-            return _context.Set<User>().Where(u => u.Name == username).SingleOrDefault();
+            return _context.Users.Where(u => u.Name == username).SingleOrDefault();
         }
 
         public void Add(User user)
         {
-            _context.Set<User>().Add(user);
+            _context.Users.Add(user);
         }
     }
 }

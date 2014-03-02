@@ -19,22 +19,20 @@ namespace Voting.Data.Repositories
         
         public Question GetById(Guid id)
         {
-            //return _context.Set<Question>().Find(id);
-
-            return _context.Set<Question>()
-                .Include(q => q.Options.Select(o =>o.Votes))
+            return _context.Questions
+                .Include(q => q.Options.Select(o => o.Votes))
                 .Where(q => q.Id == id)
                 .SingleOrDefault();
         }
 
         public void Add(Question question)
         {
-            _context.Set<Question>().Add(question);
+            _context.Questions.Add(question);
         }
 
         public List<Question> GetAll()
         {
-            return _context.Set<Question>().ToList();
+            return _context.Questions.ToList();
         }
     }
 }

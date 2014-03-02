@@ -20,7 +20,7 @@ namespace Voting.Domain.UserAggregate
 
         #region Constructors
 
-        public User() { }
+        protected User() { }
 
         public User(string name)
         {
