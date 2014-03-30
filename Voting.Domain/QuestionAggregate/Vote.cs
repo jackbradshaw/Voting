@@ -34,5 +34,10 @@ namespace Voting.Domain.QuestionAggregate
         }
 
         #endregion
+
+        public override bool Equals(object obj)
+        {
+            return this.VoterId == ((Vote)obj).VoterId;
+        }
     }
 }

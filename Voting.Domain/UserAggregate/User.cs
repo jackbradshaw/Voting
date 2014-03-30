@@ -33,13 +33,17 @@ namespace Voting.Domain.UserAggregate
 
         #region Public Methods
 
-        public void GivePoints(int numberOfPoints)
+        public void AwardPoints(int numberOfPoints)
         {
+            if (numberOfPoints < 0) throw new ArgumentException("Number of Points cannot be negative.");
+
             Points += numberOfPoints;
         }
 
         public bool ChargePoints(int numberOfPoints)
-        {
+        {           
+            if (numberOfPoints < 0) throw new ArgumentException("Number of Points cannot be negative.");
+
             //Make sure the User has enough points to spend:
             if (Points < numberOfPoints) return false;
 

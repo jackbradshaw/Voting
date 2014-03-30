@@ -24,7 +24,7 @@ namespace Voting.Domain.QuestionAggregate
 
         public string Value { get; private set; }
 
-        public virtual IList<Vote> Votes { get; private set; }
+        public virtual HashSet<Vote> Votes { get; private set; }
 
         protected Option() { }
 
@@ -33,7 +33,7 @@ namespace Voting.Domain.QuestionAggregate
             Id = Guid.NewGuid();
             Key = key;
             Value = value;
-            Votes = new List<Vote>();
+            Votes = new HashSet<Vote>();
         }
 
         public void VoteFor(User voter)

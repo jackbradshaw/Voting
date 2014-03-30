@@ -38,7 +38,7 @@ namespace Voting.Domain.QuestionAggregate
             Text = text;
 
             Options = new List<Option>();
-            if (options == null || options.Count <= 0 || options.Count > 4) throw new InvalidOptionsException(); 
+            if (options == null || options.Count < 2 || options.Count > 4) throw new InvalidOptionsException(); 
             for (int i = 0; i < options.Count; i++)
             {
                 Options.Add(new Option(i, options[i]));
@@ -60,7 +60,7 @@ namespace Voting.Domain.QuestionAggregate
         public void Vote(User voter, int option)
         {
             // 1. Check if user has not already voted
-            if (AlreadyVoted().Contains(voter.Id))
+            if (AlreadyVoted(voter))
             {
                 throw new AlreadyVotedException();
             }
@@ -71,16 +71,23 @@ namespace Voting.Domain.QuestionAggregate
             chosenOption.VoteFor(voter);
 
             // 3. Reward Voter for voting:
-            voter.GivePoints(REWARD_FOR_VOTING);
+            voter.AwardPoints(REWARD_FOR_VOTING);
         }
 
         #endregion
 
         #region Helpers
 
-        public IEnumerable<Guid> AlreadyVoted()
+        public bool AlreadyVoted(User voter)
         {
-            return Options.SelectMany(option => option.Votes.Select(vote => vote.VoterId));
+            foreach(var option in Options)
+            {
+                if(option.Votes.Contains(new Vote(voter, option)))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion
