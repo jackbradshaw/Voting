@@ -13,6 +13,8 @@ using Voting.Models;
 
 namespace Voting.Controllers
 {
+
+    //Adding a test line
     [Authorize]
     public class QuestionController : Controller
     {        
